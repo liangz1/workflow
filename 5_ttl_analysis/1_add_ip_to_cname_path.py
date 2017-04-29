@@ -1,11 +1,12 @@
 from pymongo import MongoClient, InsertOne
 import logging
-from multiprocessing.dummy import Pool
-import struct
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from config import TTL_BATCH_SIZE, DB_NAME, DOT
 
 client = MongoClient()
-db = client.aws0324
-BATCH_SIZE = 300
+db = client[DB_NAME]
 coll_path = db.cname_path
 new_coll = db.cname_real_ip
 
@@ -14,7 +15,7 @@ requests = []
 finished = set()
 for doc in new_coll.find({}, {}):
     finished.add(doc["_id"])
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 logging.info("Finished %d" % len(finished))
 for doc in coll_path.find():
     if doc["_id"] in finished:
@@ -33,7 +34,7 @@ for doc in coll_path.find():
             t[zonename][resolverdoc["name"]] = resolverdoc["ip"]
 
     for k, record in enumerate(doc["A"]):
-        # logging.debug(doc["A"]) todo: find the IP's in rawall, creating aux dict.
+        # logging.debug(doc["A"])  find the IP's in rawall, creating aux dict.
         for i, ns in enumerate(record[1]):
             zone = ns[0]
             nameserver = ns[1]
@@ -73,7 +74,7 @@ for doc in coll_path.find():
             doc["CNAMES"][k][1][i].append(ip)
 
     requests.append(InsertOne(doc))
-    if cnt % BATCH_SIZE == 0:
+    if cnt % TTL_BATCH_SIZE == 0:
         new_coll.bulk_write(requests)
         requests = []
         logging.info(cnt)

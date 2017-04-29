@@ -6,7 +6,7 @@ from multiprocessing.dummy import Pool
 import struct
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__),'../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 from config import TTL_BATCH_SIZE, DB_NAME, COLL_NAME, DOT
 
 client = MongoClient()
