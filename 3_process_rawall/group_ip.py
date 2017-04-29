@@ -1,8 +1,9 @@
 import time
 from pymongo import MongoClient
+from config import DB_NAME
 
 client = MongoClient()
-db = client["aws0324"]
+db = client[DB_NAME]
 
 
 def group_ip(group_type):

@@ -1,5 +1,4 @@
 import logging
-
 import dns.resolver
 import socket
 import sys
@@ -238,7 +237,7 @@ class Resolver(object):
     def process_auth(self, name, rdtype, ans, register, depth, logger):
         # OK, we're being sent a level lower
         # print "Process auth: %s" % "\n".join([record.name.to_text() for record in ans.response.authority])
-        logger.info(str(depth))
+        logger.debug(str(depth))
         zone = None
         for record in ans.response.authority:
             zonename = record.name.to_text()
@@ -312,7 +311,7 @@ class Resolver(object):
 
     def process_answer(self, name, rdtype, ans, register, depth, logger):
         # print "Process answer: %s" % "\n".join([record.name.to_text().lower() for record in ans.response.answer])
-        logger.info(str(depth))
+        logger.debug(str(depth))
 
         # Real answer
         names = {}
@@ -351,25 +350,10 @@ class Resolver(object):
                 for x in record.items:
                     cname = x.target.to_text().lower()
                     resolve.append((cname, rdtype))
-                    cname_key = cname.replace(".", "-")
+                    cname_key = cname.replace(".", "#")
                     if cname_key not in name.addresses:
                         name.addresses[cname_key] = []
                     name.addresses[cname_key].append(self)
-
-            # elif record.rdtype == dns.rdatatype.SRV:
-            #     for x in record.items:
-            #         cname = x.target.to_text().lower()
-            #         resolve.append((cname, 'A'))
-            #         if cname not in name.addresses:
-            #             name.addresses[cname] = []
-            #         name.addresses[cname].append(self)
-            #
-            # elif record.rdtype in (dns.rdatatype.TXT, dns.rdatatype.SOA, dns.rdatatype.PTR):
-            #     for x in record.items:
-            #         addr = x.to_text()
-            #         if addr not in name.addresses:
-            #             name.addresses[addr] = []
-            #         name.addresses[addr].append(self)
 
             else:
                 raise RuntimeError("Unknown record:" + str(record))

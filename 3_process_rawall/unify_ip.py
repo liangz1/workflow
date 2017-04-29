@@ -2,9 +2,10 @@ import socket
 import struct
 import time
 from pymongo import MongoClient, UpdateMany
+from config import DB_NAME
 
 client = MongoClient()
-db = client["aws0324"]
+db = client[DB_NAME]
 coll = db["ip_allrawall"]
 
 

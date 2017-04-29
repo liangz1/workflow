@@ -1,8 +1,9 @@
 import time
 from pymongo import MongoClient
+from config import DB_NAME, COLL_NAME
 
 client = MongoClient()
-db = client["aws0324"]
+db = client[DB_NAME]
 
 
 def pre_coll(coll_name):
@@ -53,6 +54,6 @@ def pre_coll(coll_name):
     )
 
 start = time.time()
-pre_coll("rawall") # Using 401.850880 seconds.
+pre_coll(COLL_NAME) # Using 401.850880 seconds.
 duration = time.time() - start
 print "Using %f seconds." % duration
