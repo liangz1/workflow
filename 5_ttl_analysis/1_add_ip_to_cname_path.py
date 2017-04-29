@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-from config import TTL_BATCH_SIZE, DB_NAME, DOT
+from config import TTL_BATCH_SIZE, DB_NAME
 
 client = MongoClient()
 db = client[DB_NAME]
@@ -79,23 +79,6 @@ for doc in coll_path.find():
         requests = []
         logging.info(cnt)
 new_coll.bulk_write(requests)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

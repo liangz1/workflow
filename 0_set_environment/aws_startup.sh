@@ -4,7 +4,7 @@ echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb
 sudo apt update
 sudo apt install -y mongodb-org
 sudo service mongod start
-sudo apt install -y python virtualenv unzip unbound htop ipython iotop nload vim tmux git
+sudo apt install -y python python-pip virtualenv unzip unbound htop ipython iotop nload vim tmux git
 virtualenv ~/mypy2
 sudo wget ftp://FTP.INTERNIC.NET/domain/named.cache -O /etc/unbound/root.hints
 git clone https://github.com/rthalley/dnspython.git

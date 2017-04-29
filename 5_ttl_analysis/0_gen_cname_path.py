@@ -160,5 +160,4 @@ while True:
         break
     else:
         new_coll.bulk_write(ret)
-    # if cnt % PRINT_SIZE == 0:
-    logging.info("finished %d" % (TTL_BATCH_SIZE*cnt))
+    logging.info("finished %d" % (TTL_BATCH_SIZE*cnt if TTL_BATCH_SIZE*cnt < 1000000 else 1000000))
