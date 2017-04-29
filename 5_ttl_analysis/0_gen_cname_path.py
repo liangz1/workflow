@@ -77,7 +77,7 @@ def process_doc(doc):
             # no a useful record
             see_error = addr
             continue
-        if addr[-1] == "#":
+        if addr[-1] == DOT:
             # find a CNAME
 
             if find_a_cname:
@@ -120,7 +120,7 @@ def process_doc(doc):
                 # no a useful record
                 see_error = addr
                 continue
-            if addr[-1] == "-":
+            if addr[-1] == DOT:
                 # find a CNAME
 
                 if find_a_cname:
