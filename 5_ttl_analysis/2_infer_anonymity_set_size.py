@@ -1,12 +1,13 @@
 from pymongo import MongoClient, InsertOne
 import logging
 from collections import defaultdict
-from multiprocessing.dummy import Pool
-import struct
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from config import TTL_BATCH_SIZE, DB_NAME
 
 client = MongoClient()
-db = client.aws0324
-BATCH_SIZE = 300
+db = client[DB_NAME]
 coll_path = db.cname_real_ip
 new_coll = db.ttl_real
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
@@ -52,7 +53,7 @@ for doc in coll_path.find():
     new_doc["ttl"] = ttl
     cnt += 1
     requests.append(InsertOne(new_doc))
-    if cnt % BATCH_SIZE == 0:
+    if cnt % TTL_BATCH_SIZE == 0:
         new_coll.bulk_write(requests)
         requests = []
         logging.info(cnt)
