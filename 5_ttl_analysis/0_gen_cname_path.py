@@ -4,6 +4,9 @@ from pymongo import MongoClient, InsertOne
 import logging
 from multiprocessing.dummy import Pool
 import struct
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__),'../'))
 from config import TTL_BATCH_SIZE, DB_NAME, COLL_NAME, DOT
 
 client = MongoClient()
@@ -13,7 +16,7 @@ coll = db[COLL_NAME]
 new_coll = db.cname_path
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
-with open("top-1m.txt") as f:
+with open("../top-1m.txt") as f:
     lines = f.read().splitlines()
 look = ["placeholder"]
 for line in lines:
