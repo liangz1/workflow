@@ -1,5 +1,5 @@
 # database info
-DB_NAME = "lab0418"
+DB_NAME = "aws0428"
 COLL_NAME = "rawall"
 
 # tracegraph info
