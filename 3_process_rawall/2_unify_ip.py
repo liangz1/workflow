@@ -1,7 +1,10 @@
 import socket
 import struct
 import time
-from pymongo import MongoClient, UpdateMany
+from pymongo import MongoClient
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 from config import DB_NAME
 
 client = MongoClient()
