@@ -1,11 +1,13 @@
-from pymongo import MongoClient, InsertOne
+from pymongo import MongoClient
 import logging
-from collections import defaultdict
-from multiprocessing.dummy import Pool
-import struct
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from config import DB_NAME
+
 
 client = MongoClient()
-db = client.aws0324
+db = client[DB_NAME]
 BATCH_SIZE = 3000
 coll = db.ttl_real
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
